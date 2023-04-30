@@ -1,5 +1,5 @@
 {
-    "name": "gordinskiy/doctrine-fluent-mappin-bundle",
+    "name": "gordinskiy/doctrine-fluent-mapping-bundle",
     "description": "Symfony Bundle for Fluent Mapping Driver from laravel-doctrine",
     "type": "library",
     "require": {
@@ -7,13 +7,14 @@
         "symfony/framework-bundle": "^6.0"
     },
     "require-dev": {
+        "php": "^8.0",
         "phpunit/phpunit": "^10.1",
         "symfony/phpunit-bridge": "^6.2"
     },
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Gordinskiy\\DoctrineFluentMappinBundle\\": "src/"
+            "Gordinskiy\\DoctrineFluentMappingBundle\\": "src/"
         }
     },
     "authors": [
