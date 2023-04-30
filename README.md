@@ -8,19 +8,22 @@ Run this command in your terminal:
 
 If you don't use Symfony Flex, you must enable the bundle manually in the application:
 
-`// config/bundles.php  
-  return [  
-      ...  
-      Gordinskiy\DoctrineFluentMappingBundle\DoctrineFluentMappingBundle::class => ['all' => true],
-  ];`
+```php
+// config/bundles.php    
+return [  
+    ...  
+    Gordinskiy\DoctrineFluentMappingBundle\DoctrineFluentMappingBundle::class => ['all' => true],  
+];
+```
 
 ## Configuration
 
-Create `config/packages/doctrine_fluent.yaml` file and list your entities mappers in it:
-
-`doctrine_fluent:  
+Create `config/packages/doctrine_fluent.yaml` file and list your entity mappers in it:
+```
+doctrine_fluent:  
     mappers:  
-        list:  
-            - Infrastructure\Doctrine\Mappers\UserMapper  
-            - Infrastructure\Doctrine\Mappers\RoleMapper  
+        list:
+            - Infrastructure\Doctrine\Mappers\UserMapper
+            - Infrastructure\Doctrine\Mappers\RoleMapper
             - Infrastructure\Doctrine\Mappers\AccountMapper`
+```
