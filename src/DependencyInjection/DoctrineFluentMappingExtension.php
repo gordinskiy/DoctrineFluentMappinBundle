@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Gordinskiy\DoctrineFluentMappingBundle\DependencyInjection;
 
+use Gordinskiy\DoctrineFluentMappingBundle\MappingLoaders\MappingLoader;
+use Gordinskiy\DoctrineFluentMappingBundle\MappingLoaders\MappingLocators\MappingLocator;
 use LaravelDoctrine\Fluent\FluentDriver;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -15,12 +17,26 @@ class DoctrineFluentMappingExtension extends Extension
     {
         $config = $this->processConfiguration(new Configuration(), $configs);
 
+        $mappers = [];
+
         if (!empty($config['mappers']['list'])) {
+            $mappers = $config['mappers']['list'];
+        }
+
+        if (!empty($config['mappers']['auto_locator']['directories'])) {
+            $loader = new MappingLoader(
+                new MappingLocator(...$config['mappers']['auto_locator']['directories'])
+            );
+
+            $mappers = array_merge($mappers, $loader->getAllEntityMappers());
+        }
+
+        if (!empty($mappers)) {
             $container->setDefinition(
                 FluentDriver::class,
                 (new Definition(FluentDriver::class))
                     ->addArgument(
-                        $config['mappers']['list']
+                        $mappers
                     )
             );
         }
