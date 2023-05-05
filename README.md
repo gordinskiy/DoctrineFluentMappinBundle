@@ -19,7 +19,7 @@ return [
 ## Configuration
 
 Create `config/packages/doctrine_fluent.yaml` file and list your entity mappers in it:
-```
+```yml
 doctrine_fluent:  
     mappers:  
         list:
@@ -27,3 +27,17 @@ doctrine_fluent:
             - Infrastructure\Doctrine\Mappers\RoleMapper
             - Infrastructure\Doctrine\Mappers\AccountMapper`
 ```
+
+### Configure by directories list
+You can also configure mappers by directories list:
+```yml
+doctrine_fluent:
+    mappers:
+        auto_locator:
+            directories:
+                - '%kernel.project_dir%/src/Context/Infrastructure/Doctrine/Mapping'
+                - '%kernel.project_dir%/src/SomeAnotherContext/Infrastructure/Doctrine/Mapping'
+                - '%kernel.project_dir%/src/ActivityLog/Infrastructure/Doctrine/Mapping'
+                - '%kernel.project_dir%/src/OneMoreContext/Infrastructure/Doctrine/Mapping'
+```
+All classes in these directories tat implement [Mapping](https://github.com/laravel-doctrine/fluent/blob/1.3/src/Mapping.php) interface will be automatically registered as mappers.
