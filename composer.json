@@ -14,7 +14,8 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Gordinskiy\\DoctrineFluentMappingBundle\\": "src/"
+            "Gordinskiy\\DoctrineFluentMappingBundle\\": "src/",
+            "Gordinskiy\\DoctrineFluentMappingBundle\\Tests\\": "tests/"
         }
     },
     "authors": [
