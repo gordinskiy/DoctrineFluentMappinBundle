@@ -24,7 +24,7 @@ class DoctrineFluentMappingExtension extends Extension
         }
 
         if (!empty($config['mappers']['auto_locator']['directories'])) {
-            $rootDir = $container->getParameter('kernel.project_dir');
+            $rootDir = (string) $container->getParameter('kernel.project_dir');
 
             $directories = [];
 
