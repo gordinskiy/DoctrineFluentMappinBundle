@@ -24,8 +24,24 @@ class DoctrineFluentMappingExtension extends Extension
         }
 
         if (!empty($config['mappers']['auto_locator']['directories'])) {
+            $rootDir = $container->getParameter('kernel.project_dir');
+
+            $directories = [];
+
+            foreach ($config['mappers']['auto_locator']['directories'] as $dirPath) {
+                if (!str_starts_with($dirPath, $rootDir)) {
+                    if (!str_starts_with($dirPath, DIRECTORY_SEPARATOR)) {
+                        $dirPath = DIRECTORY_SEPARATOR . $dirPath;
+                    }
+
+                    $dirPath = $rootDir . $dirPath;
+                }
+
+                $directories[] = $dirPath;
+            }
+
             $loader = new MappingLoader(
-                new MappingLocator(...$config['mappers']['auto_locator']['directories'])
+                new MappingLocator(...$directories)
             );
 
             $mappers = array_merge($mappers, $loader->getAllEntityMappers());
