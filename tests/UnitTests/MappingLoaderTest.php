@@ -18,7 +18,7 @@ class MappingLoaderTest extends TestCase
     public function test_entity_mapping_loading(): void
     {
         $rootDir = dirname(__DIR__, 1);
-        $locator = new MappingLocator($rootDir . '/Fixtures/Mappers/DirectoryWithSeveralMappers');
+        $locator = new MappingLocator($rootDir . '/Fixtures/Wrong/DirectoryWithSeveralMappers');
         $loader = new MappingLoader($locator);
 
         $this->assertSame(
