@@ -24,15 +24,16 @@ class MappingLocatorTest extends TestCase
             ]
         );
     }
+
     public function test_nested_directory_with_mappers(): void
     {
-        self::markTestSkipped('TODO: Fix this test');
-        $locator = new MappingLocator('../Fixtures/Mappers/NestedDirectoriesWithMappers');
+        $testsRoot = dirname(__DIR__, 1);
+        $locator = new MappingLocator($testsRoot . '/Fixtures/Mappers/NestedDirectoriesWithMappers');
 
         self::assertSame(
             expected: $locator->getAllMappers(),
             actual: [
-                '../Fixtures/Mappers/NestedDirectoriesWithMappers/UserMapper.php',
+                $testsRoot . '/Fixtures/Mappers/NestedDirectoriesWithMappers/UserMapper.php',
             ]
         );
     }
