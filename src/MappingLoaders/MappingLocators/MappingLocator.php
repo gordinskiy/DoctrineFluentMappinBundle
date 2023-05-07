@@ -50,9 +50,9 @@ final class MappingLocator implements MappingLocatorInterface
                 continue;
             }
 
-            $filePath = $configDir . DIRECTORY_SEPARATOR . $item;
-
-            $entityMappers[] = $filePath;
+            if (pathinfo($item, PATHINFO_EXTENSION) === 'php') {
+                $entityMappers[] = $configDir . DIRECTORY_SEPARATOR . $item;
+            }
         }
 
         if (empty($entityMappers)) {
