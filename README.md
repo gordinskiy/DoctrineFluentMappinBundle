@@ -1,6 +1,7 @@
 # Doctrine Fluent Mapping Bundle
 Symfony Bundle for [laravel-doctrine/fluent](https://github.com/laravel-doctrine/fluent)
-that provide alternative PHP Mapping Driver for Doctrine ORM
+that provide alternative PHP Mapping Driver for Doctrine ORM.  
+Works as extension for [doctrine/DoctrineBundle](https://github.com/doctrine/DoctrineBundle).
 
 ## Installation
 Run this command in your terminal:  
