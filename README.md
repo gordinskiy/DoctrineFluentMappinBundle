@@ -35,9 +35,10 @@ doctrine_fluent:
     mappers:
         auto_locator:
             directories:
-                - '%kernel.project_dir%/src/Context/Infrastructure/Doctrine/Mapping'
-                - '%kernel.project_dir%/src/SomeAnotherContext/Infrastructure/Doctrine/Mapping'
-                - '%kernel.project_dir%/src/ActivityLog/Infrastructure/Doctrine/Mapping'
-                - '%kernel.project_dir%/src/OneMoreContext/Infrastructure/Doctrine/Mapping'
+                - 'src/Context/Infrastructure/Doctrine/Mapping'
+                - 'src/SomeAnotherContext/Infrastructure/Doctrine/Mapping'
+                - 'src/ActivityLog/Infrastructure/Doctrine/Mapping'
+                - 'src/OneMoreContext/Infrastructure/Doctrine/Mapping'
 ```
-All classes in these directories tat implement [Mapping](https://github.com/laravel-doctrine/fluent/blob/1.3/src/Mapping.php) interface will be automatically registered as mappers.
+You can use absolute paths or paths relative to the project root directory.  
+All classes in these directories that implement [Mapping](https://github.com/laravel-doctrine/fluent/blob/1.3/src/Mapping.php) interface will be automatically registered as mappers.
