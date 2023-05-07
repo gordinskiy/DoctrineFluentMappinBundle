@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Gordinskiy\DoctrineFluentMappingBundle\MappingLoaders\MappingLocators;
 
+use Gordinskiy\DoctrineFluentMappingBundle\Exceptions\ConfigurationException;
+
 final class MappingLocator implements MappingLocatorInterface
 {
     /**
@@ -30,9 +32,18 @@ final class MappingLocator implements MappingLocatorInterface
         return $entityMappers;
     }
 
+    /**
+     * @param string $configDir
+     * @return string[]
+     * @throws ConfigurationException
+     */
     private function getAllMappersInDirectory(string $configDir): array
     {
         $entityMappers = [];
+
+        if (!file_exists($configDir)) {
+            throw ConfigurationException::directoryNotFound($configDir);
+        }
 
         foreach (scandir($configDir) ?: [] as $item) {
             if ($item === '.' || $item === '..') {
@@ -42,6 +53,10 @@ final class MappingLocator implements MappingLocatorInterface
             $filePath = $configDir . DIRECTORY_SEPARATOR . $item;
 
             $entityMappers[] = $filePath;
+        }
+
+        if (empty($entityMappers)) {
+            throw ConfigurationException::mappersNotFound($configDir);
         }
 
         return $entityMappers;

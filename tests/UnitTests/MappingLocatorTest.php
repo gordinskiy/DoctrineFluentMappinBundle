@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Gordinskiy\DoctrineFluentMappingBundle\Tests\UnitTests;
 
+use Gordinskiy\DoctrineFluentMappingBundle\Exceptions\ConfigurationException;
 use Gordinskiy\DoctrineFluentMappingBundle\MappingLoaders\MappingLocators\MappingLocator;
 use PHPUnit\Framework\TestCase;
 
@@ -43,18 +44,25 @@ class MappingLocatorTest extends TestCase
         self::assertEmpty($locator->getAllMappers());
     }
 
-    // TODO: Exception must be thrown
     public function test_with_wrong_path(): void
     {
+        self::expectException(ConfigurationException::class);
+        self::expectExceptionMessage("Mapping directory does not exist [wrong_path]");
+
         $locator = new MappingLocator('wrong_path');
 
-        self::assertEmpty($locator->getAllMappers());
+        $locator->getAllMappers();
     }
 
-    // TODO: Exception must be thrown
     public function test_with_empty_directory(): void
     {
-        $locator = new MappingLocator('../Fixtures/Mappers/EmptyDirectory');
+        $testsRoot = dirname(__DIR__, 1);
+
+        self::expectException(ConfigurationException::class);
+        self::expectExceptionMessage("Mapping directory is empty [$testsRoot/Fixtures/Mappers/EmptyDirectory]");
+
+
+        $locator = new MappingLocator($testsRoot . '/Fixtures/Mappers/EmptyDirectory');
 
         self::assertEmpty($locator->getAllMappers());
     }
