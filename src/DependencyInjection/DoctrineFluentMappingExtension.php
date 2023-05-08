@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Gordinskiy\DoctrineFluentMappingBundle\DependencyInjection;
 
+use Gordinskiy\DoctrineFluentMappingBundle\Exceptions\ConfigurationException;
 use Gordinskiy\DoctrineFluentMappingBundle\MappingLoaders\MappingLoader;
 use Gordinskiy\DoctrineFluentMappingBundle\MappingLoaders\MappingLocators\MappingLocator;
 use LaravelDoctrine\Fluent\FluentDriver;
@@ -13,6 +14,13 @@ use Symfony\Component\DependencyInjection\Extension\Extension;
 
 class DoctrineFluentMappingExtension extends Extension
 {
+    /**
+     * @param array $configs
+     * @param ContainerBuilder $container
+     *
+     * @throws ConfigurationException
+     * @throws \ReflectionException
+     */
     public function load(array $configs, ContainerBuilder $container): void
     {
         $config = $this->processConfiguration(new Configuration(), $configs);
