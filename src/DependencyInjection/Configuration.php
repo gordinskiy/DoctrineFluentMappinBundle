@@ -9,33 +9,28 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
+    public const MAPPING_KEY = 'mappings';
+    public const MAPPING_PATHS_KEY = 'mapping_paths';
+
     /**
      * @inheritDoc
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('doctrine_php_mapper');
+        $treeBuilder = new TreeBuilder('doctrine_fluent');
 
         $treeBuilder->getRootNode()
             ->children()
-                ->arrayNode('mappers')
-                    ->children()
-                        ->arrayNode('list')
-                            ->cannotBeEmpty()
-                            ->prototype('scalar')
-                                ->cannotBeEmpty()
-                            ->end()
-                        ->end()
-                        ->arrayNode('auto_locator')
-                            ->children()
-                                ->arrayNode('directories')
-                                    ->cannotBeEmpty()
-                                    ->prototype('scalar')
-                                        ->cannotBeEmpty()
-                                    ->end()
-                                ->end()
-                            ->end()
-                        ->end()
+                ->arrayNode(self::MAPPING_KEY)
+                    ->cannotBeEmpty()
+                    ->prototype('scalar')
+                        ->cannotBeEmpty()
+                    ->end()
+                ->end()
+                ->arrayNode(self::MAPPING_PATHS_KEY)
+                    ->cannotBeEmpty()
+                    ->prototype('scalar')
+                        ->cannotBeEmpty()
                     ->end()
                 ->end()
             ->end()
