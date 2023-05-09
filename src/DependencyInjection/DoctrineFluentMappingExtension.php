@@ -17,18 +17,14 @@ class DoctrineFluentMappingExtension extends Extension
     {
         $config = $this->processConfiguration(new Configuration(), $configs);
 
-        $mappers = [];
+        $mappings = $config[Configuration::MAPPING_KEY];
 
-        if (!empty($config['mappers']['list'])) {
-            $mappers = $config['mappers']['list'];
-        }
-
-        if (!empty($config['mappers']['auto_locator']['directories'])) {
+        if (!empty($config[Configuration::MAPPING_PATHS_KEY])) {
             $rootDir = (string) $container->getParameter('kernel.project_dir');
 
             $directories = [];
 
-            foreach ($config['mappers']['auto_locator']['directories'] as $dirPath) {
+            foreach ($config[Configuration::MAPPING_PATHS_KEY] as $dirPath) {
                 if (!str_starts_with($dirPath, $rootDir)) {
                     if (!str_starts_with($dirPath, DIRECTORY_SEPARATOR)) {
                         $dirPath = DIRECTORY_SEPARATOR . $dirPath;
@@ -44,15 +40,15 @@ class DoctrineFluentMappingExtension extends Extension
                 new MappingLocator(...$directories)
             );
 
-            $mappers = array_merge($mappers, $loader->getAllEntityMappers());
+            $mappings = array_merge($mappings, $loader->getAllEntityMappers());
         }
 
-        if (!empty($mappers)) {
+        if (!empty($mappings)) {
             $container->setDefinition(
                 FluentDriver::class,
                 (new Definition(FluentDriver::class))
                     ->addArgument(
-                        $mappers
+                        $mappings
                     )
             );
         }
