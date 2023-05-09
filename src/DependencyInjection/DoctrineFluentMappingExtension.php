@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Gordinskiy\DoctrineFluentMappingBundle\DependencyInjection;
 
+use Gordinskiy\DoctrineFluentMappingBundle\Exceptions\ConfigurationException;
 use Gordinskiy\DoctrineFluentMappingBundle\MappingLoaders\MappingLoader;
 use Gordinskiy\DoctrineFluentMappingBundle\MappingLoaders\MappingLocators\MappingLocator;
 use LaravelDoctrine\Fluent\FluentDriver;
@@ -13,18 +14,24 @@ use Symfony\Component\DependencyInjection\Extension\Extension;
 
 class DoctrineFluentMappingExtension extends Extension
 {
+    /**
+     * @param array $configs
+     * @param ContainerBuilder $container
+     *
+     * @throws ConfigurationException
+     */
     public function load(array $configs, ContainerBuilder $container): void
     {
         $config = $this->processConfiguration(new Configuration(), $configs);
 
-        $mappings = $config[Configuration::MAPPING_KEY];
+        $mappings = $config[Configuration::MAPPINGS_KEY];
 
-        if (!empty($config[Configuration::MAPPING_PATHS_KEY])) {
+        if (!empty($config[Configuration::MAPPINGS_PATHS_KEY])) {
             $rootDir = (string) $container->getParameter('kernel.project_dir');
 
             $directories = [];
 
-            foreach ($config[Configuration::MAPPING_PATHS_KEY] as $dirPath) {
+            foreach ($config[Configuration::MAPPINGS_PATHS_KEY] as $dirPath) {
                 if (!str_starts_with($dirPath, $rootDir)) {
                     if (!str_starts_with($dirPath, DIRECTORY_SEPARATOR)) {
                         $dirPath = DIRECTORY_SEPARATOR . $dirPath;
@@ -43,15 +50,17 @@ class DoctrineFluentMappingExtension extends Extension
             $mappings = array_merge($mappings, $loader->getAllEntityMappers());
         }
 
-        if (!empty($mappings)) {
-            $container->setDefinition(
-                FluentDriver::class,
-                (new Definition(FluentDriver::class))
-                    ->addArgument(
-                        $mappings
-                    )
-            );
+        if (empty($mappings)) {
+            throw ConfigurationException::mappingsNotConfigured();
         }
+
+        $container->setDefinition(
+            FluentDriver::class,
+            (new Definition(FluentDriver::class))
+                ->addArgument(
+                    $mappings
+                )
+        );
     }
 
     public function getAlias(): string
