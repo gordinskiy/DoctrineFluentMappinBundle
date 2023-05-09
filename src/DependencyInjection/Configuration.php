@@ -10,7 +10,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     public const MAPPINGS_KEY = 'mappings';
-    public const MAPPINGS_PATHS_KEY = 'mapping_paths';
+    public const MAPPINGS_PATHS_KEY = 'mappings_paths';
 
     /**
      * @inheritDoc

@@ -19,27 +19,24 @@ return [
 
 ## Configuration
 
-Create `config/packages/doctrine_fluent.yaml` file and list your entity mappers in it:
+Create `config/packages/doctrine_fluent.yaml` file and list your entity mappings in it:
 ```yml
-doctrine_fluent:  
-    mappers:  
-        list:
-            - Infrastructure\Doctrine\Mappers\UserMapper
-            - Infrastructure\Doctrine\Mappers\RoleMapper
-            - Infrastructure\Doctrine\Mappers\AccountMapper`
+doctrine_fluent:
+    mappings:
+        - Infrastructure\Doctrine\Mappings\UserMapping
+        - Infrastructure\Doctrine\Mappings\RoleMapping
+        - Infrastructure\Doctrine\Mappings\AccountMapping
 ```
 
 ### Configure by directories list
-You can also configure mappers by directories list:
+You can also configure mappings by directories list:
 ```yml
 doctrine_fluent:
-    mappers:
-        auto_locator:
-            directories:
-                - 'src/Context/Infrastructure/Doctrine/Mapping'
-                - 'src/SomeAnotherContext/Infrastructure/Doctrine/Mapping'
-                - 'src/ActivityLog/Infrastructure/Doctrine/Mapping'
-                - 'src/OneMoreContext/Infrastructure/Doctrine/Mapping'
+    mappings_paths:
+        - src/Context/Infrastructure/Doctrine/Mappings
+        - src/SomeAnotherContext/Infrastructure/Doctrine/Mappings
+        - src/ActivityLog/Infrastructure/Doctrine/Mappings
+        - src/OneMoreContext/Infrastructure/Doctrine/Mappings
 ```
 You can use absolute paths or paths relative to the project root directory.  
 All classes in these directories that implement [Mapping](https://github.com/laravel-doctrine/fluent/blob/1.3/src/Mapping.php) interface will be automatically registered as mappers.
