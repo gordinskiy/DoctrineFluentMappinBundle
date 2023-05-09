@@ -9,8 +9,8 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    public const MAPPING_KEY = 'mappings';
-    public const MAPPING_PATHS_KEY = 'mapping_paths';
+    public const MAPPINGS_KEY = 'mappings';
+    public const MAPPINGS_PATHS_KEY = 'mapping_paths';
 
     /**
      * @inheritDoc
@@ -21,13 +21,13 @@ class Configuration implements ConfigurationInterface
 
         $treeBuilder->getRootNode()
             ->children()
-                ->arrayNode(self::MAPPING_KEY)
+                ->arrayNode(self::MAPPINGS_KEY)
                     ->cannotBeEmpty()
                     ->prototype('scalar')
                         ->cannotBeEmpty()
                     ->end()
                 ->end()
-                ->arrayNode(self::MAPPING_PATHS_KEY)
+                ->arrayNode(self::MAPPINGS_PATHS_KEY)
                     ->cannotBeEmpty()
                     ->prototype('scalar')
                         ->cannotBeEmpty()
