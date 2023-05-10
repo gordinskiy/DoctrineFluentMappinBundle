@@ -1,0 +1,2 @@
+doctrine_fluent:
+  mappings_paths: 'not array'
