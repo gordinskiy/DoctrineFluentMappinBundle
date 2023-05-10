@@ -20,8 +20,9 @@ final class MappingLoader
     public function getAllEntityMappers(): array
     {
         $loadedClasses = [];
+        $mappingFiles = $this->mappingLocator->getAllMappers();
 
-        foreach ($this->mappingLocator->getAllMappers() as $mappingFile) {
+        foreach ($mappingFiles as $mappingFile) {
             require_once $mappingFile;
 
             $loadedClasses[] = basename($mappingFile, '.php');
@@ -32,8 +33,13 @@ final class MappingLoader
         foreach (get_declared_classes() as $class) {
             if (in_array(Mapping::class, class_implements($class))) {
                 $className = basename(str_replace('\\', '/', $class));
+
                 if (in_array($className, $loadedClasses)) {
-                    $entityMappers[] = $class;
+                    $reflection = new \ReflectionClass($class);
+
+                    if (in_array($reflection->getFileName(), $mappingFiles)) {
+                        $entityMappers[] = $class;
+                    }
                 }
             }
         }

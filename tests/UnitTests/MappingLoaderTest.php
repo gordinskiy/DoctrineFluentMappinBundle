@@ -10,7 +10,9 @@ use Gordinskiy\DoctrineFluentMappingBundle\Tests\Fixtures\Mappers\{
     DirectoryWithSeveralMappers\OrderMapper,
     DirectoryWithSeveralMappers\ProductMapper,
     DirectoryWithSeveralMappers\UserMapper,
+    NestedDirectoriesWithMappers\UserMapper as AnotherUserMapper,
 };
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
 class MappingLoaderTest extends TestCase
@@ -27,6 +29,25 @@ class MappingLoaderTest extends TestCase
                 OrderMapper::class,
                 ProductMapper::class,
                 UserMapper::class,
+            ]
+        );
+    }
+
+    /**
+     * @description Depends on previous test to ensure that another UserMapper class was loaded
+     */
+    #[Depends('test_entity_mapping_loading')]
+    public function test_entity_mapping_loading_with_duplicated_mapping(): void
+    {
+        $rootDir = dirname(__DIR__, 1);
+
+        $locator = new MappingLocator($rootDir . '/Fixtures/Mappers/NestedDirectoriesWithMappers');
+        $loader = new MappingLoader($locator);
+
+        $this->assertSame(
+            expected: $loader->getAllEntityMappers(),
+            actual: [
+                AnotherUserMapper::class,
             ]
         );
     }
