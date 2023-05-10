@@ -11,7 +11,7 @@ class ConfigurationException extends Exception
     public static function mappingsNotConfigured(): self
     {
         return new self(
-            message: "At least one mapping or mapping path must be configured"
+            message: "No mappings or mappings paths provided"
         );
     }
 
