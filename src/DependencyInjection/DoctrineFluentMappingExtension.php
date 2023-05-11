@@ -15,8 +15,7 @@ use Symfony\Component\DependencyInjection\Extension\Extension;
 class DoctrineFluentMappingExtension extends Extension
 {
     /**
-     * @param array $configs
-     * @param ContainerBuilder $container
+     * @inheritDoc
      *
      * @throws ConfigurationException
      */
