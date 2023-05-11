@@ -1,8 +1,8 @@
 # Doctrine Fluent Mapping Bundle
 [![Latest Stable Version](https://poser.pugx.org/gordinskiy/doctrine-fluent-mapping-bundle/v/stable.svg)](https://packagist.org/packages/gordinskiy/doctrine-fluent-mapping-bundle)
+[![Run Tests](https://github.com/gordinskiy/DoctrineFluentMappingBundle/workflows/PHP%20Tests/badge.svg?branch=master)](https://github.com/gordinskiy/DoctrineFluentMappingBundle/actions)
 [![codecov](https://codecov.io/github/gordinskiy/DoctrineFluentMappingBundle/branch/tests/codecov/graph/badge.svg?token=OND89Z4T29)](https://codecov.io/github/gordinskiy/DoctrineFluentMappingBundle)
 [![License](https://poser.pugx.org/gordinskiy/doctrine-fluent-mapping-bundle/license.svg)](https://packagist.org/packages/gordinskiy/doctrine-fluent-mapping-bundle)
-[![Run Tests](https://github.com/gordinskiy/DoctrineFluentMappingBundle/workflows/CI/badge.svg?branch=master)](https://github.com/gordinskiy/DoctrineFluentMappingBundle/actions)
 
 
 Symfony Bundle for [laravel-doctrine/fluent](https://github.com/laravel-doctrine/fluent)
