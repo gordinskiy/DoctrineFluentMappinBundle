@@ -1,5 +1,7 @@
 parameters:
-	level: 8
+	level: 4
 	paths:
 		- src/Exceptions
 		- src/MappingLoaders
+		- src/DoctrineFluentMappingBundle.php
+		- src/DependencyInjection/MappingDriverCompilerPass.php
