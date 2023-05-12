@@ -36,4 +36,11 @@ class ConfigurationException extends Exception
             message: "Mapping class [$mappingCLass] must implement " . Mapping::class
         );
     }
+
+    public static function mappingClassNotExist(string $mappingCLass): self
+    {
+        return new self(
+            message: "Mapping class [$mappingCLass] not exist"
+        );
+    }
 }

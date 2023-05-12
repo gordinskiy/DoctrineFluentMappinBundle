@@ -21,6 +21,13 @@ class MappingsValidatorTest extends TestCase
         MappingsValidator::isValid(MappingsValidator::class);
     }
 
+    public function test_validation_of_non_existent_class(): void
+    {
+        self::expectException(ConfigurationException::class);
+        self::expectExceptionMessage("Mapping class [Not a class] not exist");
+        MappingsValidator::isValid('Not a class');
+    }
+
     public function test_validation_of_correct_class(): void
     {
         self::expectNotToPerformAssertions();

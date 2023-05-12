@@ -17,6 +17,10 @@ class MappingsValidator
     public static function isValid(string ...$mappingClasses): void
     {
         foreach ($mappingClasses as $class) {
+            if (!class_exists($class)) {
+                throw ConfigurationException::mappingClassNotExist($class);
+            }
+
             if (!in_array(Mapping::class, class_implements($class))) {
                 throw ConfigurationException::invalidMappingClass($class);
             }
