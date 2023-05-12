@@ -27,8 +27,8 @@ class MappingLoaderTest extends TestCase
             expected: $loader->getAllEntityMappers(),
             actual: [
                 OrderMapper::class,
-                ProductMapper::class,
                 UserMapper::class,
+                ProductMapper::class,
             ]
         );
     }

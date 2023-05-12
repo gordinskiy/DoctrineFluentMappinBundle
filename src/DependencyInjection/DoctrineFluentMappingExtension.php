@@ -7,6 +7,7 @@ namespace Gordinskiy\DoctrineFluentMappingBundle\DependencyInjection;
 use Gordinskiy\DoctrineFluentMappingBundle\Exceptions\ConfigurationException;
 use Gordinskiy\DoctrineFluentMappingBundle\MappingLoaders\MappingLoader;
 use Gordinskiy\DoctrineFluentMappingBundle\MappingLoaders\MappingLocators\MappingLocator;
+use Gordinskiy\DoctrineFluentMappingBundle\Validators\MappingsValidator;
 use LaravelDoctrine\Fluent\FluentDriver;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -24,6 +25,7 @@ class DoctrineFluentMappingExtension extends Extension
         $config = $this->processConfiguration(new Configuration(), $configs);
 
         $mappings = $config[Configuration::MAPPINGS_KEY];
+        MappingsValidator::isValid(...$mappings);
 
         if (!empty($config[Configuration::MAPPINGS_PATHS_KEY])) {
             $rootDir = (string) $container->getParameter('kernel.project_dir');

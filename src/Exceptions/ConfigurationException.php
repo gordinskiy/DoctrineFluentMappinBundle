@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Gordinskiy\DoctrineFluentMappingBundle\Exceptions;
 
 use Exception;
+use LaravelDoctrine\Fluent\Mapping;
 
 class ConfigurationException extends Exception
 {
@@ -26,6 +27,13 @@ class ConfigurationException extends Exception
     {
         return new self(
             message: "Mapping directory is empty [$configDir]"
+        );
+    }
+
+    public static function invalidMappingClass(string $mappingCLass): self
+    {
+        return new self(
+            message: "Mapping class [$mappingCLass] must implement " . Mapping::class
         );
     }
 }
