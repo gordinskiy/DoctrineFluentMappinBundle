@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Gordinskiy\DoctrineFluentMappingBundle\Tests\UnitTests\DependencyInjection;
+namespace Gordinskiy\Tests\DependencyInjection;
 
 use Gordinskiy\DoctrineFluentMappingBundle\DependencyInjection\DoctrineFluentMappingExtension;
 use Gordinskiy\DoctrineFluentMappingBundle\Exceptions\ConfigurationException;
-use Gordinskiy\DoctrineFluentMappingBundle\Tests\Fixtures\Mappers\DirectoryWithSeveralMappers\OrderMapper;
-use Gordinskiy\DoctrineFluentMappingBundle\Tests\Fixtures\Mappers\DirectoryWithSeveralMappers\ProductMapper;
-use Gordinskiy\DoctrineFluentMappingBundle\Tests\Fixtures\Mappers\DirectoryWithSeveralMappers\UserMapper;
-use Gordinskiy\DoctrineFluentMappingBundle\Tests\Fixtures\Mappers\NestedDirectoriesWithMappers\UserMapper as AnotherUser;
+use Gordinskiy\Fixtures\Mappers\DirectoryWithSeveralMappers\OrderMapper;
+use Gordinskiy\Fixtures\Mappers\DirectoryWithSeveralMappers\ProductMapper;
+use Gordinskiy\Fixtures\Mappers\DirectoryWithSeveralMappers\UserMapper;
+use Gordinskiy\Fixtures\Mappers\NestedDirectoriesWithMappers\UserMapper as AnotherUser;
 use LaravelDoctrine\Fluent\FluentDriver;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

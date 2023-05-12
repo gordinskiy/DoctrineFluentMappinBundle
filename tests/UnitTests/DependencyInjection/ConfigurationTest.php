@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Gordinskiy\DoctrineFluentMappingBundle\Tests\UnitTests\DependencyInjection;
+namespace Gordinskiy\Tests\DependencyInjection;
 
 use Gordinskiy\DoctrineFluentMappingBundle\DependencyInjection\Configuration;
-use Gordinskiy\DoctrineFluentMappingBundle\Tests\Fixtures\Mappers\DirectoryWithSeveralMappers\OrderMapper;
-use Gordinskiy\DoctrineFluentMappingBundle\Tests\Fixtures\Mappers\DirectoryWithSeveralMappers\ProductMapper;
-use Gordinskiy\DoctrineFluentMappingBundle\Tests\Fixtures\Mappers\DirectoryWithSeveralMappers\UserMapper;
+use Gordinskiy\Fixtures\Mappers\DirectoryWithSeveralMappers\OrderMapper;
+use Gordinskiy\Fixtures\Mappers\DirectoryWithSeveralMappers\ProductMapper;
+use Gordinskiy\Fixtures\Mappers\DirectoryWithSeveralMappers\UserMapper;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Processor;

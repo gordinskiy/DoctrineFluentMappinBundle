@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gordinskiy\DoctrineFluentMappingBundle\Tests\UnitTests;
+namespace Gordinskiy\Tests\MappingLoaders\MappingLocators;
 
 use Gordinskiy\DoctrineFluentMappingBundle\Exceptions\ConfigurationException;
 use Gordinskiy\DoctrineFluentMappingBundle\MappingLoaders\MappingLocators\MappingLocator;
@@ -12,7 +12,7 @@ class MappingLocatorTest extends TestCase
 {
     public function test_directory_with_mappers(): void
     {
-        $projectRoot = dirname(__DIR__, 1);
+        $projectRoot = dirname(__DIR__, 3);
         $locator = new MappingLocator($projectRoot . '/Fixtures/Mappers/DirectoryWithSeveralMappers');
 
         self::assertSame(
@@ -27,7 +27,7 @@ class MappingLocatorTest extends TestCase
 
     public function test_nested_directory_with_mappers(): void
     {
-        $testsRoot = dirname(__DIR__, 1);
+        $testsRoot = dirname(__DIR__, 3);
         $locator = new MappingLocator($testsRoot . '/Fixtures/Mappers/NestedDirectoriesWithMappers');
 
         self::assertSame(
@@ -57,11 +57,10 @@ class MappingLocatorTest extends TestCase
 
     public function test_with_empty_directory(): void
     {
-        $testsRoot = dirname(__DIR__, 1);
+        $testsRoot = dirname(__DIR__, 3);
 
         self::expectException(ConfigurationException::class);
         self::expectExceptionMessage("Mapping directory is empty [$testsRoot/Fixtures/Mappers/EmptyDirectory]");
-
 
         $locator = new MappingLocator($testsRoot . '/Fixtures/Mappers/EmptyDirectory');
 

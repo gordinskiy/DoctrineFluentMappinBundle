@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gordinskiy\DoctrineFluentMappingBundle\Tests\Fixtures\Mappers\NestedDirectoriesWithMappers;
+namespace Gordinskiy\Fixtures\Mappers\NestedDirectoriesWithMappers;
 
 use LaravelDoctrine\Fluent\EntityMapping;
 use LaravelDoctrine\Fluent\Fluent;

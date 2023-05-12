@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Gordinskiy\DoctrineFluentMappingBundle\Tests\UnitTests\Validators;
+namespace Gordinskiy\Tests\Validators;
 
 use Gordinskiy\DoctrineFluentMappingBundle\Exceptions\ConfigurationException;
-use Gordinskiy\DoctrineFluentMappingBundle\Tests\Fixtures\Mappers\DirectoryWithSeveralMappers\OrderMapper;
+use Gordinskiy\Fixtures\Mappers\DirectoryWithSeveralMappers\OrderMapper;
 use Gordinskiy\DoctrineFluentMappingBundle\Validators\MappingsValidator;
 use LaravelDoctrine\Fluent\Mapping;
 use PHPUnit\Framework\TestCase;

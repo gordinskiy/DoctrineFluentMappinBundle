@@ -1,5 +1,5 @@
 doctrine_fluent:
   mappings:
-    - Gordinskiy\DoctrineFluentMappingBundle\Tests\Fixtures\Mappers\DirectoryWithSeveralMappers\OrderMapper
-    - Gordinskiy\DoctrineFluentMappingBundle\Tests\Fixtures\Mappers\DirectoryWithSeveralMappers\UserMapper
-    - Gordinskiy\DoctrineFluentMappingBundle\Tests\Fixtures\Mappers\DirectoryWithSeveralMappers\ProductMapper
+    - Gordinskiy\Fixtures\Mappers\DirectoryWithSeveralMappers\OrderMapper
+    - Gordinskiy\Fixtures\Mappers\DirectoryWithSeveralMappers\UserMapper
+    - Gordinskiy\Fixtures\Mappers\DirectoryWithSeveralMappers\ProductMapper
