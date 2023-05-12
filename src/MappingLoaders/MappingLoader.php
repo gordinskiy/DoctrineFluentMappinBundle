@@ -17,10 +17,10 @@ final class MappingLoader
     /**
      * @return string[]
      */
-    public function getAllEntityMappers(): array
+    public function getAllEntityMappings(): array
     {
         $loadedClasses = [];
-        $mappingFiles = $this->mappingLocator->getAllMappers();
+        $mappingFiles = $this->mappingLocator->getAllMappings();
 
         foreach ($mappingFiles as $mappingFile) {
             require_once $mappingFile;
@@ -28,7 +28,7 @@ final class MappingLoader
             $loadedClasses[] = basename($mappingFile, '.php');
         }
 
-        $entityMappers = [];
+        $entityMappings = [];
 
         foreach (get_declared_classes() as $class) {
             if (in_array(Mapping::class, class_implements($class))) {
@@ -38,12 +38,12 @@ final class MappingLoader
                     $reflection = new \ReflectionClass($class);
 
                     if (in_array($reflection->getFileName(), $mappingFiles)) {
-                        $entityMappers[] = $class;
+                        $entityMappings[] = $class;
                     }
                 }
             }
         }
 
-        return $entityMappers;
+        return $entityMappings;
     }
 }

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Gordinskiy\Tests\DependencyInjection;
 
 use Gordinskiy\DoctrineFluentMappingBundle\DependencyInjection\Configuration;
-use Gordinskiy\Fixtures\Mappers\DirectoryWithSeveralMappers\OrderMapper;
-use Gordinskiy\Fixtures\Mappers\DirectoryWithSeveralMappers\ProductMapper;
-use Gordinskiy\Fixtures\Mappers\DirectoryWithSeveralMappers\UserMapper;
+use Gordinskiy\Fixtures\Mappings\DirectoryWithSeveralMappings\OrderMapping;
+use Gordinskiy\Fixtures\Mappings\DirectoryWithSeveralMappings\ProductMapping;
+use Gordinskiy\Fixtures\Mappings\DirectoryWithSeveralMappings\UserMapping;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Processor;
@@ -22,7 +22,7 @@ class ConfigurationTest extends TestCase
         self::assertConfigurationStructure($configuration);
         self::assertEmpty($configuration['mappings_paths']);
         self::assertEquals(
-            expected: [OrderMapper::class, UserMapper::class, ProductMapper::class],
+            expected: [OrderMapping::class, UserMapping::class, ProductMapping::class],
             actual: $configuration['mappings']
         );
     }
@@ -35,8 +35,8 @@ class ConfigurationTest extends TestCase
         self::assertEmpty($configuration['mappings']);
         self::assertEquals(
             expected: [
-                'tests/Fixtures/Mappers/DirectoryWithSeveralMappers',
-                'tests/Fixtures/Mappers/NestedDirectoriesWithMappers'
+                'tests/Fixtures/Mappings/DirectoryWithSeveralMappings',
+                'tests/Fixtures/Mappings/NestedDirectoriesWithMappings'
             ],
             actual: $configuration['mappings_paths'],
         );
@@ -48,13 +48,13 @@ class ConfigurationTest extends TestCase
 
         self::assertConfigurationStructure($configuration);
         self::assertEquals(
-            expected: [OrderMapper::class, UserMapper::class, ProductMapper::class],
+            expected: [OrderMapping::class, UserMapping::class, ProductMapping::class],
             actual: $configuration['mappings']
         );
         self::assertEquals(
             expected: [
-                'tests/Fixtures/Mappers/DirectoryWithSeveralMappers',
-                'tests/Fixtures/Mappers/NestedDirectoriesWithMappers'
+                'tests/Fixtures/Mappings/DirectoryWithSeveralMappings',
+                'tests/Fixtures/Mappings/NestedDirectoriesWithMappings'
             ],
             actual: $configuration['mappings_paths'],
         );
@@ -63,7 +63,7 @@ class ConfigurationTest extends TestCase
     public function test_config_with_invalid_key(): void
     {
         self::expectException(InvalidConfigurationException::class);
-        self::expectExceptionMessage('Unrecognized option "mappers" under "doctrine_fluent"');
+        self::expectExceptionMessage('Unrecognized option "migrations" under "doctrine_fluent"');
         $this->processYamlConfig('invalid_key.yaml');
     }
 

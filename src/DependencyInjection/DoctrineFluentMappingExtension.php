@@ -48,7 +48,7 @@ class DoctrineFluentMappingExtension extends Extension
                 new MappingLocator(...$directories)
             );
 
-            $mappings = array_merge($mappings, $loader->getAllEntityMappers());
+            $mappings = array_merge($mappings, $loader->getAllEntityMappings());
         }
 
         if (empty($mappings)) {

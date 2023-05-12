@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Gordinskiy\Fixtures\Mappers\NestedDirectoriesWithMappers\NestedMappers;
+namespace Gordinskiy\Fixtures\Mappings\NestedDirectoriesWithMappings;
 
 use LaravelDoctrine\Fluent\EntityMapping;
 use LaravelDoctrine\Fluent\Fluent;
 
-class UserOrderMapper extends EntityMapping
+class UserMapping extends EntityMapping
 {
     public function mapFor(): string
     {

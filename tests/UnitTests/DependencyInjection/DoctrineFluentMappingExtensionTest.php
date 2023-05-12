@@ -6,10 +6,10 @@ namespace Gordinskiy\Tests\DependencyInjection;
 
 use Gordinskiy\DoctrineFluentMappingBundle\DependencyInjection\DoctrineFluentMappingExtension;
 use Gordinskiy\DoctrineFluentMappingBundle\Exceptions\ConfigurationException;
-use Gordinskiy\Fixtures\Mappers\DirectoryWithSeveralMappers\OrderMapper;
-use Gordinskiy\Fixtures\Mappers\DirectoryWithSeveralMappers\ProductMapper;
-use Gordinskiy\Fixtures\Mappers\DirectoryWithSeveralMappers\UserMapper;
-use Gordinskiy\Fixtures\Mappers\NestedDirectoriesWithMappers\UserMapper as AnotherUser;
+use Gordinskiy\Fixtures\Mappings\DirectoryWithSeveralMappings\OrderMapping;
+use Gordinskiy\Fixtures\Mappings\DirectoryWithSeveralMappings\ProductMapping;
+use Gordinskiy\Fixtures\Mappings\DirectoryWithSeveralMappings\UserMapping;
+use Gordinskiy\Fixtures\Mappings\NestedDirectoriesWithMappings\UserMapping as AnotherUser;
 use LaravelDoctrine\Fluent\FluentDriver;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -83,9 +83,9 @@ class DoctrineFluentMappingExtensionTest extends TestCase
                 $this->equalTo((new Definition(FluentDriver::class))
                     ->addArgument(
                         [
-                            OrderMapper::class,
-                            UserMapper::class,
-                            ProductMapper::class,
+                            OrderMapping::class,
+                            UserMapping::class,
+                            ProductMapping::class,
                             AnotherUser::class,
                         ]
                     ))

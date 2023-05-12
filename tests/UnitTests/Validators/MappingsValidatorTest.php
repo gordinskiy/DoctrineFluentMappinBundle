@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Gordinskiy\Tests\Validators;
 
 use Gordinskiy\DoctrineFluentMappingBundle\Exceptions\ConfigurationException;
-use Gordinskiy\Fixtures\Mappers\DirectoryWithSeveralMappers\OrderMapper;
+use Gordinskiy\Fixtures\Mappings\DirectoryWithSeveralMappings\OrderMapping;
 use Gordinskiy\DoctrineFluentMappingBundle\Validators\MappingsValidator;
 use LaravelDoctrine\Fluent\Mapping;
 use PHPUnit\Framework\TestCase;
@@ -32,6 +32,6 @@ class MappingsValidatorTest extends TestCase
     {
         self::expectNotToPerformAssertions();
 
-        MappingsValidator::isValid(OrderMapper::class);
+        MappingsValidator::isValid(OrderMapping::class);
     }
 }
