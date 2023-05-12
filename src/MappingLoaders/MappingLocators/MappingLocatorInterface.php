@@ -9,5 +9,5 @@ interface MappingLocatorInterface
     /**
      * @return string[]
      */
-    public function getAllMappers(): array;
+    public function getAllMappings(): array;
 }

@@ -21,15 +21,15 @@ final class MappingLocator implements MappingLocatorInterface
     /**
      * @inheritDoc
      */
-    public function getAllMappers(): array
+    public function getAllMappings(): array
     {
-        $entityMappers = [];
+        $entityMappings = [];
 
         foreach ($this->directories as $configDir) {
-            $entityMappers = [...$entityMappers, ...$this->getAllMappersInDirectory($configDir)];
+            $entityMappings = [...$entityMappings, ...$this->getAllMappingsInDirectory($configDir)];
         }
 
-        return $entityMappers;
+        return $entityMappings;
     }
 
     /**
@@ -37,9 +37,9 @@ final class MappingLocator implements MappingLocatorInterface
      * @return string[]
      * @throws ConfigurationException
      */
-    private function getAllMappersInDirectory(string $configDir): array
+    private function getAllMappingsInDirectory(string $configDir): array
     {
-        $entityMappers = [];
+        $entityMappings = [];
 
         if (!file_exists($configDir)) {
             throw ConfigurationException::directoryNotFound($configDir);
@@ -51,14 +51,14 @@ final class MappingLocator implements MappingLocatorInterface
             }
 
             if (pathinfo($item, PATHINFO_EXTENSION) === 'php') {
-                $entityMappers[] = $configDir . DIRECTORY_SEPARATOR . $item;
+                $entityMappings[] = $configDir . DIRECTORY_SEPARATOR . $item;
             }
         }
 
-        if (empty($entityMappers)) {
-            throw ConfigurationException::mappersNotFound($configDir);
+        if (empty($entityMappings)) {
+            throw ConfigurationException::mappingsNotFound($configDir);
         }
 
-        return $entityMappers;
+        return $entityMappings;
     }
 }

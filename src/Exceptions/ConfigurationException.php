@@ -23,7 +23,7 @@ class ConfigurationException extends Exception
         );
     }
 
-    public static function mappersNotFound(string $configDir): self
+    public static function mappingsNotFound(string $configDir): self
     {
         return new self(
             message: "Mapping directory is empty [$configDir]"

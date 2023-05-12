@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Gordinskiy\Fixtures\Mappers\DirectoryWithSeveralMappers;
+namespace Gordinskiy\Fixtures\Mappings\DirectoryWithSeveralMappings;
 
 use LaravelDoctrine\Fluent\EntityMapping;
 use LaravelDoctrine\Fluent\Fluent;
 
-class UserMapper extends EntityMapping
+class UserMapping extends EntityMapping
 {
     public function mapFor(): string
     {

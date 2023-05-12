@@ -1,4 +1,4 @@
 doctrine_fluent:
   mappings_paths:
-    - tests/Fixtures/Mappers/DirectoryWithSeveralMappers
-    - tests/Fixtures/Mappers/NestedDirectoriesWithMappers
+    - tests/Fixtures/Mappings/DirectoryWithSeveralMappings
+    - tests/Fixtures/Mappings/NestedDirectoriesWithMappings

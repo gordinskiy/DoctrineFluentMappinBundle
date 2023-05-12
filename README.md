@@ -45,4 +45,4 @@ doctrine_fluent:
         - src/OneMoreContext/Infrastructure/Doctrine/Mappings
 ```
 You can use absolute paths or paths relative to the project root directory.  
-All classes in these directories that implement [Mapping](https://github.com/laravel-doctrine/fluent/blob/1.3/src/Mapping.php) interface will be automatically registered as mappers.
+All classes in these directories that implement [Mapping](https://github.com/laravel-doctrine/fluent/blob/1.3/src/Mapping.php) interface will be automatically registered as mappings.
