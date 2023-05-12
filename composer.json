@@ -28,7 +28,8 @@
     "autoload": {
         "psr-4": {
             "Gordinskiy\\DoctrineFluentMappingBundle\\": "src/",
-            "Gordinskiy\\DoctrineFluentMappingBundle\\Tests\\": "tests/"
+            "Gordinskiy\\Tests\\": "tests/UnitTests",
+            "Gordinskiy\\Fixtures\\": "tests/Fixtures"
         }
     },
     "config": {

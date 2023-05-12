@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gordinskiy\DoctrineFluentMappingBundle\Tests\UnitTests;
+namespace Gordinskiy\Tests;
 
 use Gordinskiy\DoctrineFluentMappingBundle\DependencyInjection\DoctrineFluentMappingExtension;
 use Gordinskiy\DoctrineFluentMappingBundle\DependencyInjection\MappingDriverCompilerPass;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gordinskiy\DoctrineFluentMappingBundle\Tests\UnitTests\DependencyInjection;
+namespace Gordinskiy\Tests\DependencyInjection;
 
 use Gordinskiy\DoctrineFluentMappingBundle\DependencyInjection\MappingDriverCompilerPass;
 use LaravelDoctrine\Fluent\FluentDriver;
