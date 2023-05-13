@@ -2,31 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Gordinskiy\DoctrineFluentMappingBundle\MappingLoaders\MappingLocators;
+namespace Gordinskiy\DoctrineFluentMappingBundle\ConfigurationProcessors\MappingLocators;
 
 use Gordinskiy\DoctrineFluentMappingBundle\Exceptions\ConfigurationException;
 
 final class MappingLocator implements MappingLocatorInterface
 {
-    /**
-     * @var string[]
-     */
-    protected array $directories;
-
-    public function __construct(string ...$directories)
-    {
-        $this->directories = $directories;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getAllMappings(): array
+    public function findMappingFiles(...$directories): array
     {
         $entityMappings = [];
 
-        foreach ($this->directories as $configDir) {
-            $entityMappings = [...$entityMappings, ...$this->getAllMappingsInDirectory($configDir)];
+        foreach ($directories as $configDir) {
+            $entityMappings = [...$entityMappings, ...$this->findMappingFilesInDirectory($configDir)];
         }
 
         return $entityMappings;
@@ -37,7 +24,7 @@ final class MappingLocator implements MappingLocatorInterface
      * @return string[]
      * @throws ConfigurationException
      */
-    private function getAllMappingsInDirectory(string $configDir): array
+    private function findMappingFilesInDirectory(string $configDir): array
     {
         $entityMappings = [];
 

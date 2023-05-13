@@ -2,21 +2,28 @@
 
 declare(strict_types=1);
 
-namespace Gordinskiy\DoctrineFluentMappingBundle\Validators;
+namespace Gordinskiy\DoctrineFluentMappingBundle\ConfigurationProcessors;
 
 use Gordinskiy\DoctrineFluentMappingBundle\Exceptions\ConfigurationException;
 use LaravelDoctrine\Fluent\Mapping;
 
-class MappingsValidator
+final class MappingProcessor
 {
+    /** @var string[] */
+    private readonly array $mappingClasses;
+
+    public function __construct(string ...$mappingClasses)
+    {
+        $this->mappingClasses = $mappingClasses;
+    }
+
     /**
-     * @param string ...$mappingClasses
-     *
+     * @return string[]
      * @throws ConfigurationException
      */
-    public static function isValid(string ...$mappingClasses): void
+    public function getMappings(): array
     {
-        foreach ($mappingClasses as $class) {
+        foreach ($this->mappingClasses as $class) {
             if (!class_exists($class)) {
                 throw ConfigurationException::mappingClassNotExist($class);
             }
@@ -25,5 +32,7 @@ class MappingsValidator
                 throw ConfigurationException::invalidMappingClass($class);
             }
         }
+
+        return $this->mappingClasses;
     }
 }

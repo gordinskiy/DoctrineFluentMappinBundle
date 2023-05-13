@@ -84,8 +84,8 @@ class DoctrineFluentMappingExtensionTest extends TestCase
                     ->addArgument(
                         [
                             OrderMapping::class,
-                            UserMapping::class,
                             ProductMapping::class,
+                            UserMapping::class,
                             AnotherUser::class,
                         ]
                     ))

@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Gordinskiy\DoctrineFluentMappingBundle\DependencyInjection;
 
+use Gordinskiy\DoctrineFluentMappingBundle\ConfigurationProcessors\MappingProcessor;
+use Gordinskiy\DoctrineFluentMappingBundle\ConfigurationProcessors\MappingsPathsProcessor;
 use Gordinskiy\DoctrineFluentMappingBundle\Exceptions\ConfigurationException;
-use Gordinskiy\DoctrineFluentMappingBundle\MappingLoaders\MappingLoader;
-use Gordinskiy\DoctrineFluentMappingBundle\MappingLoaders\MappingLocators\MappingLocator;
-use Gordinskiy\DoctrineFluentMappingBundle\Validators\MappingsValidator;
 use LaravelDoctrine\Fluent\FluentDriver;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -24,31 +23,20 @@ class DoctrineFluentMappingExtension extends Extension
     {
         $config = $this->processConfiguration(new Configuration(), $configs);
 
-        $mappings = $config[Configuration::MAPPINGS_KEY];
-        MappingsValidator::isValid(...$mappings);
+        $mappings = [];
+
+        if (!empty($config[Configuration::MAPPINGS_KEY])) {
+            $mappings = (new MappingProcessor(
+                ...$config[Configuration::MAPPINGS_KEY]
+            ))->getMappings();
+        }
 
         if (!empty($config[Configuration::MAPPINGS_PATHS_KEY])) {
-            $rootDir = (string) $container->getParameter('kernel.project_dir');
-
-            $directories = [];
-
-            foreach ($config[Configuration::MAPPINGS_PATHS_KEY] as $dirPath) {
-                if (!str_starts_with($dirPath, $rootDir)) {
-                    if (!str_starts_with($dirPath, DIRECTORY_SEPARATOR)) {
-                        $dirPath = DIRECTORY_SEPARATOR . $dirPath;
-                    }
-
-                    $dirPath = $rootDir . $dirPath;
-                }
-
-                $directories[] = $dirPath;
-            }
-
-            $loader = new MappingLoader(
-                new MappingLocator(...$directories)
+            $processor = new MappingsPathsProcessor(
+                (string) $container->getParameter('kernel.project_dir')
             );
 
-            $mappings = array_merge($mappings, $loader->getAllEntityMappings());
+            $mappings = array_merge($mappings, $processor->process(...$config[Configuration::MAPPINGS_PATHS_KEY]));
         }
 
         if (empty($mappings)) {

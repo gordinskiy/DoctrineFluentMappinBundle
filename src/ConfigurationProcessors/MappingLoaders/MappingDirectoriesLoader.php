@@ -2,25 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Gordinskiy\DoctrineFluentMappingBundle\MappingLoaders;
+namespace Gordinskiy\DoctrineFluentMappingBundle\ConfigurationProcessors\MappingLoaders;
 
 use Gordinskiy\DoctrineFluentMappingBundle\MappingLoaders\MappingLocators\MappingLocatorInterface;
 use LaravelDoctrine\Fluent\Mapping;
 
-final class MappingLoader
+final class MappingDirectoriesLoader
 {
-    public function __construct(
-        private readonly MappingLocatorInterface $mappingLocator
-    ) {
-    }
-
     /**
+     * @param string ...$mappingFiles
      * @return string[]
      */
-    public function getAllEntityMappings(): array
+    public function loadMappings(string ...$mappingFiles): array
     {
         $loadedClasses = [];
-        $mappingFiles = $this->mappingLocator->getAllMappings();
 
         foreach ($mappingFiles as $mappingFile) {
             require_once $mappingFile;
