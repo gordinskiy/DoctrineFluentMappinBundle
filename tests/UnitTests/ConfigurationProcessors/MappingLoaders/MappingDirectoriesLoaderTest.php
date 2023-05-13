@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Gordinskiy\Tests\MappingLoaders;
+namespace Gordinskiy\Tests\ConfigurationProcessors\MappingLoaders;
 
-use Gordinskiy\DoctrineFluentMappingBundle\MappingLoaders\MappingLoader;
-use Gordinskiy\DoctrineFluentMappingBundle\MappingLoaders\MappingLocators\MappingLocator;
+use Gordinskiy\DoctrineFluentMappingBundle\ConfigurationProcessors\MappingLoaders\MappingDirectoriesLoader;
+use Gordinskiy\DoctrineFluentMappingBundle\ConfigurationProcessors\MappingLocators\MappingLocator;
 use Gordinskiy\Fixtures\Mappings\DirectoryWithSeveralMappings\OrderMapping;
 use Gordinskiy\Fixtures\Mappings\DirectoryWithSeveralMappings\ProductMapping;
 use Gordinskiy\Fixtures\Mappings\DirectoryWithSeveralMappings\UserMapping;
@@ -13,20 +13,23 @@ use Gordinskiy\Fixtures\Mappings\NestedDirectoriesWithMappings\UserMapping as An
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
-class MappingLoaderTest extends TestCase
+class MappingDirectoriesLoaderTest extends TestCase
 {
+    // TODO: Remove Locator from loader test
     public function test_entity_mapping_loading(): void
     {
-        $rootDir = dirname(__DIR__, 2);
-        $locator = new MappingLocator($rootDir . '/Fixtures/Mappings/DirectoryWithSeveralMappings');
-        $loader = new MappingLoader($locator);
+        $rootDir = dirname(__DIR__, 3);
+        $locator = new MappingLocator();
+        $loader = new MappingDirectoriesLoader();
 
         $this->assertSame(
-            expected: $loader->getAllEntityMappings(),
+            expected: $loader->loadMappings(
+                ...$locator->findMappingFiles($rootDir . '/Fixtures/Mappings/DirectoryWithSeveralMappings')
+            ),
             actual: [
                 OrderMapping::class,
-                UserMapping::class,
                 ProductMapping::class,
+                UserMapping::class,
             ]
         );
     }
@@ -37,13 +40,15 @@ class MappingLoaderTest extends TestCase
     #[Depends('test_entity_mapping_loading')]
     public function test_entity_mapping_loading_with_duplicated_mapping(): void
     {
-        $rootDir = dirname(__DIR__, 2);
+        $rootDir = dirname(__DIR__, 3);
 
-        $locator = new MappingLocator($rootDir . '/Fixtures/Mappings/NestedDirectoriesWithMappings');
-        $loader = new MappingLoader($locator);
+        $locator = new MappingLocator();
+        $loader = new MappingDirectoriesLoader();
 
         $this->assertSame(
-            expected: $loader->getAllEntityMappings(),
+            expected: $loader->loadMappings(
+                ...$locator->findMappingFiles($rootDir . '/Fixtures/Mappings/NestedDirectoriesWithMappings')
+            ),
             actual: [
                 AnotherUserMappings::class,
             ]

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Gordinskiy\Tests\MappingLoaders\MappingLocators;
+namespace Gordinskiy\Tests\ConfigurationProcessors\MappingLocators;
 
 use Gordinskiy\DoctrineFluentMappingBundle\Exceptions\ConfigurationException;
-use Gordinskiy\DoctrineFluentMappingBundle\MappingLoaders\MappingLocators\MappingLocator;
+use Gordinskiy\DoctrineFluentMappingBundle\ConfigurationProcessors\MappingLocators\MappingLocator;
 use PHPUnit\Framework\TestCase;
 
 class MappingLocatorTest extends TestCase
@@ -13,10 +13,10 @@ class MappingLocatorTest extends TestCase
     public function test_directory_with_mappings(): void
     {
         $projectRoot = dirname(__DIR__, 3);
-        $locator = new MappingLocator($projectRoot . '/Fixtures/Mappings/DirectoryWithSeveralMappings');
+        $locator = new MappingLocator();
 
         self::assertSame(
-            expected: $locator->getAllMappings(),
+            expected: $locator->findMappingFiles($projectRoot . '/Fixtures/Mappings/DirectoryWithSeveralMappings'),
             actual: [
                 $projectRoot . '/Fixtures/Mappings/DirectoryWithSeveralMappings/OrderMapping.php',
                 $projectRoot . '/Fixtures/Mappings/DirectoryWithSeveralMappings/ProductMapping.php',
@@ -28,10 +28,10 @@ class MappingLocatorTest extends TestCase
     public function test_nested_directory_with_mappings(): void
     {
         $testsRoot = dirname(__DIR__, 3);
-        $locator = new MappingLocator($testsRoot . '/Fixtures/Mappings/NestedDirectoriesWithMappings');
+        $locator = new MappingLocator();
 
         self::assertSame(
-            expected: $locator->getAllMappings(),
+            expected: $locator->findMappingFiles($testsRoot . '/Fixtures/Mappings/NestedDirectoriesWithMappings'),
             actual: [
                 $testsRoot . '/Fixtures/Mappings/NestedDirectoriesWithMappings/UserMapping.php',
             ]
@@ -42,7 +42,7 @@ class MappingLocatorTest extends TestCase
     {
         $locator = new MappingLocator();
 
-        self::assertEmpty($locator->getAllMappings());
+        self::assertEmpty($locator->findMappingFiles());
     }
 
     public function test_with_wrong_path(): void
@@ -50,9 +50,9 @@ class MappingLocatorTest extends TestCase
         self::expectException(ConfigurationException::class);
         self::expectExceptionMessage("Mapping directory does not exist [wrong_path]");
 
-        $locator = new MappingLocator('wrong_path');
+        $locator = new MappingLocator();
 
-        $locator->getAllMappings();
+        $locator->findMappingFiles('wrong_path');
     }
 
     public function test_with_empty_directory(): void
@@ -62,8 +62,8 @@ class MappingLocatorTest extends TestCase
         self::expectException(ConfigurationException::class);
         self::expectExceptionMessage("Mapping directory is empty [$testsRoot/Fixtures/Mappings/EmptyDirectory]");
 
-        $locator = new MappingLocator($testsRoot . '/Fixtures/Mappings/EmptyDirectory');
+        $locator = new MappingLocator();
 
-        self::assertEmpty($locator->getAllMappings());
+        self::assertEmpty($locator->findMappingFiles($testsRoot . '/Fixtures/Mappings/EmptyDirectory'));
     }
 }
