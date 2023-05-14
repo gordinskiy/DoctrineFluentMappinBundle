@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Gordinskiy\Tests\ConfigurationProcessors\MappingLoaders;
 
 use Gordinskiy\DoctrineFluentMappingBundle\ConfigurationProcessors\MappingLoaders\MappingDirectoriesLoader;
-use Gordinskiy\DoctrineFluentMappingBundle\ConfigurationProcessors\MappingLocators\MappingLocator;
 use Gordinskiy\Fixtures\Mappings\DirectoryWithSeveralMappings\OrderMapping;
 use Gordinskiy\Fixtures\Mappings\DirectoryWithSeveralMappings\ProductMapping;
 use Gordinskiy\Fixtures\Mappings\DirectoryWithSeveralMappings\UserMapping;
@@ -15,22 +14,22 @@ use PHPUnit\Framework\TestCase;
 
 class MappingDirectoriesLoaderTest extends TestCase
 {
-    // TODO: Remove Locator from loader test
     public function test_entity_mapping_loading(): void
     {
         $rootDir = dirname(__DIR__, 3);
-        $locator = new MappingLocator();
         $loader = new MappingDirectoriesLoader();
 
         $this->assertSame(
-            expected: $loader->loadMappings(
-                ...$locator->findMappingFiles($rootDir . '/Fixtures/Mappings/DirectoryWithSeveralMappings')
-            ),
-            actual: [
+            expected: [
                 OrderMapping::class,
                 ProductMapping::class,
                 UserMapping::class,
-            ]
+            ],
+            actual: $loader->loadMappings(
+                $rootDir . "/Fixtures/Mappings/DirectoryWithSeveralMappings/OrderMapping.php",
+                $rootDir . "/Fixtures/Mappings/DirectoryWithSeveralMappings/ProductMapping.php",
+                $rootDir . "/Fixtures/Mappings/DirectoryWithSeveralMappings/UserMapping.php",
+            )
         );
     }
 
@@ -41,17 +40,15 @@ class MappingDirectoriesLoaderTest extends TestCase
     public function test_entity_mapping_loading_with_duplicated_mapping(): void
     {
         $rootDir = dirname(__DIR__, 3);
-
-        $locator = new MappingLocator();
         $loader = new MappingDirectoriesLoader();
 
         $this->assertSame(
-            expected: $loader->loadMappings(
-                ...$locator->findMappingFiles($rootDir . '/Fixtures/Mappings/NestedDirectoriesWithMappings')
-            ),
-            actual: [
+            expected: [
                 AnotherUserMappings::class,
-            ]
+            ],
+            actual: $loader->loadMappings(
+                $rootDir . "/Fixtures/Mappings/NestedDirectoriesWithMappings/UserMapping.php"
+            )
         );
     }
 }
