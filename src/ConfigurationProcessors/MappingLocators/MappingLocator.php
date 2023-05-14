@@ -5,51 +5,52 @@ declare(strict_types=1);
 namespace Gordinskiy\DoctrineFluentMappingBundle\ConfigurationProcessors\MappingLocators;
 
 use Gordinskiy\DoctrineFluentMappingBundle\Exceptions\ConfigurationException;
+use Gordinskiy\DoctrineFluentMappingBundle\FileSystem\FileSystem;
+use Gordinskiy\DoctrineFluentMappingBundle\ValueObjects\DirectoryPath;
+use Gordinskiy\DoctrineFluentMappingBundle\ValueObjects\FilePath;
+use Gordinskiy\DoctrineFluentMappingBundle\ValueObjects\Path;
 
 final class MappingLocator implements MappingLocatorInterface
 {
-    public function findMappingFiles(...$directories): array
+    /**
+     * @return FilePath[]
+     * @throws ConfigurationException
+     */
+    public function findMappingFiles(Path ...$directories): array
     {
         $entityMappings = [];
 
         foreach ($directories as $configDir) {
-            $entityMappings = [...$entityMappings, ...$this->findMappingFilesInDirectory($configDir)];
+            $entityMappings = [
+                ...$entityMappings,
+                ...$this->findMappingFilesInDirectory($configDir->assertAsDirectory()),
+            ];
         }
 
         return $entityMappings;
     }
 
     /**
-     * @param string $configDir
-     * @return string[]
+     * @param DirectoryPath $configDir
+     * @return FilePath[]
      * @throws ConfigurationException
      */
-    private function findMappingFilesInDirectory(string $configDir): array
+    private function findMappingFilesInDirectory(DirectoryPath $configDir): array
     {
-        $entityMappings = [];
+        $entityMappingFilePaths = [];
 
-        if (!is_dir($configDir)) {
-            if (!file_exists($configDir)) {
-                throw ConfigurationException::directoryNotFound($configDir);
-            }
-
-            throw ConfigurationException::notDirectory($configDir);
-        }
-
-        foreach (scandir($configDir) ?: [] as $item) {
-            if ($item === '.' || $item === '..') {
-                continue;
-            }
-
-            if (pathinfo($item, PATHINFO_EXTENSION) === 'php') {
-                $entityMappings[] = $configDir . DIRECTORY_SEPARATOR . $item;
+        // TODO: Use array_map instead of foreach
+        foreach ((new FileSystem)->getFilesInDirectory($configDir) ?: [] as $filePath) {
+            if ($filePath->hasPhpExtension()) {
+                $entityMappingFilePaths[] = $filePath;
             }
         }
 
-        if (empty($entityMappings)) {
-            throw ConfigurationException::mappingsNotFound($configDir);
+        if (empty($entityMappingFilePaths)) {
+            // TODO: Replace string in exception Argument with DirectoryPath
+            throw ConfigurationException::mappingsNotFound($configDir->getValue());
         }
 
-        return $entityMappings;
+        return $entityMappingFilePaths;
     }
 }

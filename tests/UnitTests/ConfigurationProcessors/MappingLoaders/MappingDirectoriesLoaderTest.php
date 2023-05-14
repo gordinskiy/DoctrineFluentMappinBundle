@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Gordinskiy\Tests\ConfigurationProcessors\MappingLoaders;
 
 use Gordinskiy\DoctrineFluentMappingBundle\ConfigurationProcessors\MappingLoaders\MappingDirectoriesLoader;
+use Gordinskiy\DoctrineFluentMappingBundle\ValueObjects\DirectoryPath;
+use Gordinskiy\DoctrineFluentMappingBundle\ValueObjects\FilePath;
 use Gordinskiy\Fixtures\Mappings\DirectoryWithSeveralMappings\OrderMapping;
 use Gordinskiy\Fixtures\Mappings\DirectoryWithSeveralMappings\ProductMapping;
 use Gordinskiy\Fixtures\Mappings\DirectoryWithSeveralMappings\UserMapping;
@@ -19,6 +21,8 @@ class MappingDirectoriesLoaderTest extends TestCase
         $rootDir = dirname(__DIR__, 3);
         $loader = new MappingDirectoriesLoader();
 
+        $directory = new DirectoryPath($rootDir . "/Fixtures/Mappings/DirectoryWithSeveralMappings");
+
         $this->assertSame(
             expected: [
                 OrderMapping::class,
@@ -26,9 +30,9 @@ class MappingDirectoriesLoaderTest extends TestCase
                 UserMapping::class,
             ],
             actual: $loader->loadMappings(
-                $rootDir . "/Fixtures/Mappings/DirectoryWithSeveralMappings/OrderMapping.php",
-                $rootDir . "/Fixtures/Mappings/DirectoryWithSeveralMappings/ProductMapping.php",
-                $rootDir . "/Fixtures/Mappings/DirectoryWithSeveralMappings/UserMapping.php",
+                new FilePath("OrderMapping.php", $directory),
+                new FilePath("ProductMapping.php", $directory),
+                new FilePath("UserMapping.php", $directory),
             )
         );
     }
@@ -42,12 +46,14 @@ class MappingDirectoriesLoaderTest extends TestCase
         $rootDir = dirname(__DIR__, 3);
         $loader = new MappingDirectoriesLoader();
 
+        $directory = new DirectoryPath($rootDir . "/Fixtures/Mappings/NestedDirectoriesWithMappings");
+
         $this->assertSame(
             expected: [
                 AnotherUserMappings::class,
             ],
             actual: $loader->loadMappings(
-                $rootDir . "/Fixtures/Mappings/NestedDirectoriesWithMappings/UserMapping.php"
+                new FilePath("UserMapping.php", $directory),
             )
         );
     }

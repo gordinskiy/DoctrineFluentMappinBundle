@@ -4,22 +4,26 @@ declare(strict_types=1);
 
 namespace Gordinskiy\DoctrineFluentMappingBundle\ConfigurationProcessors\MappingLoaders;
 
+use Gordinskiy\DoctrineFluentMappingBundle\ValueObjects\FilePath;
 use LaravelDoctrine\Fluent\Mapping;
 
 final class MappingDirectoriesLoader
 {
     /**
-     * @param string ...$mappingFiles
+     * @param FilePath ...$mappingFiles
      * @return string[]
      */
-    public function loadMappings(string ...$mappingFiles): array
+    public function loadMappings(FilePath ...$mappingFiles): array
     {
         $loadedClasses = [];
 
-        foreach ($mappingFiles as $mappingFile) {
-            require_once $mappingFile;
+        $indexedMappingFiles = [];
 
-            $loadedClasses[] = basename($mappingFile, '.php');
+        foreach ($mappingFiles as $mappingFile) {
+            require_once (string) $mappingFile;
+
+            $indexedMappingFiles[(string) $mappingFile] = $mappingFile;
+            $loadedClasses[] = $mappingFile->nameWithoutExtension();
         }
 
         $entityMappings = [];
@@ -31,7 +35,7 @@ final class MappingDirectoriesLoader
                 if (in_array($className, $loadedClasses)) {
                     $reflection = new \ReflectionClass($class);
 
-                    if (in_array($reflection->getFileName(), $mappingFiles)) {
+                    if (array_key_exists($reflection->getFileName(), $indexedMappingFiles)) {
                         $entityMappings[] = $class;
                     }
                 }

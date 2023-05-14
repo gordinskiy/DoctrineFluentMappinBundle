@@ -7,6 +7,8 @@ namespace Gordinskiy\DoctrineFluentMappingBundle\ConfigurationProcessors;
 use Gordinskiy\DoctrineFluentMappingBundle\ConfigurationProcessors\MappingLoaders\MappingDirectoriesLoader;
 use Gordinskiy\DoctrineFluentMappingBundle\ConfigurationProcessors\MappingLocators\MappingLocator;
 use Gordinskiy\DoctrineFluentMappingBundle\ConfigurationProcessors\MappingLocators\MappingLocatorInterface;
+use Gordinskiy\DoctrineFluentMappingBundle\Exceptions\ConfigurationException;
+use Gordinskiy\DoctrineFluentMappingBundle\ValueObjects\Path;
 
 final class MappingsPathsProcessor
 {
@@ -22,22 +24,14 @@ final class MappingsPathsProcessor
 
     /**
      * @return string[]
+     * @throws ConfigurationException
      */
     public function process(string ...$mappingsPaths): array
     {
-        $directories = [];
-
-        foreach ($mappingsPaths as $mappingsPath) {
-            if (!str_starts_with($mappingsPath, $this->rootDir)) {
-                if (!str_starts_with($mappingsPath, DIRECTORY_SEPARATOR)) {
-                    $mappingsPath = DIRECTORY_SEPARATOR . $mappingsPath;
-                }
-
-                $mappingsPath = $this->rootDir . $mappingsPath;
-            }
-
-            $directories[] = $mappingsPath;
-        }
+        $directories = array_map(
+            fn (Path $path) => $path->withPrefix(DIRECTORY_SEPARATOR)->withPrefix($this->rootDir),
+            Path::createCollection(...$mappingsPaths)
+        );
 
         return $this->mappingLoader->loadMappings(
             ...($this->mappingLocator)->findMappingFiles(
