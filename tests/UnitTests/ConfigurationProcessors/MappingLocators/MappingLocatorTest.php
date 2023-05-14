@@ -67,6 +67,18 @@ class MappingLocatorTest extends TestCase
         $locator->findMappingFiles($pathToFile);
     }
 
+    public function test_directory_with_wrong_extension(): void
+    {
+        $testsRoot = dirname(__DIR__, 3);
+        $pathToFile = $testsRoot . '/Fixtures/Mappings/WithInvalidExtension';
+
+        self::expectException(ConfigurationException::class);
+        self::expectExceptionMessage("Mapping directory is empty [$pathToFile]");
+
+        $locator = new MappingLocator();
+        $locator->findMappingFiles($pathToFile);
+    }
+
     public function test_with_empty_directory(): void
     {
         $testsRoot = dirname(__DIR__, 3);
