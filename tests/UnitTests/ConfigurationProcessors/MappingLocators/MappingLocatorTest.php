@@ -55,6 +55,18 @@ class MappingLocatorTest extends TestCase
         $locator->findMappingFiles('wrong_path');
     }
 
+    public function test_with_file_path(): void
+    {
+        $testsRoot = dirname(__DIR__, 3);
+        $pathToFile = $testsRoot . '/Fixtures/Mappings/DirectoryWithSeveralMappings/UserMapping.php';
+
+        self::expectException(ConfigurationException::class);
+        self::expectExceptionMessage("Mapping path must be a directory [$pathToFile]");
+
+        $locator = new MappingLocator();
+        $locator->findMappingFiles($pathToFile);
+    }
+
     public function test_with_empty_directory(): void
     {
         $testsRoot = dirname(__DIR__, 3);

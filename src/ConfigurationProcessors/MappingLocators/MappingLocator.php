@@ -28,8 +28,12 @@ final class MappingLocator implements MappingLocatorInterface
     {
         $entityMappings = [];
 
-        if (!file_exists($configDir)) {
-            throw ConfigurationException::directoryNotFound($configDir);
+        if (!is_dir($configDir)) {
+            if (!file_exists($configDir)) {
+                throw ConfigurationException::directoryNotFound($configDir);
+            }
+
+            throw ConfigurationException::notDirectory($configDir);
         }
 
         foreach (scandir($configDir) ?: [] as $item) {
