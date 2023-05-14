@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Gordinskiy\DoctrineFluentMappingBundle\ConfigurationProcessors\MappingLoaders;
 
-use Gordinskiy\DoctrineFluentMappingBundle\MappingLoaders\MappingLocators\MappingLocatorInterface;
 use LaravelDoctrine\Fluent\Mapping;
 
 final class MappingDirectoriesLoader
