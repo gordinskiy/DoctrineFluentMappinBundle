@@ -30,6 +30,13 @@ class ConfigurationException extends Exception
         );
     }
 
+    public static function notDirectory(string $configDir): self
+    {
+        return new self(
+            message: "Mapping path must be a directory [$configDir]"
+        );
+    }
+
     public static function invalidMappingClass(string $mappingCLass): self
     {
         return new self(
