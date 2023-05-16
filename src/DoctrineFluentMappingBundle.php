@@ -16,7 +16,7 @@ class DoctrineFluentMappingBundle extends AbstractBundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new MappingDriverCompilerPass());
+        #$container->addCompilerPass(new MappingDriverCompilerPass());
     }
 
     public function getContainerExtension(): ?ExtensionInterface

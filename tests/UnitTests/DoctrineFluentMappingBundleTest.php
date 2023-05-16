@@ -12,17 +12,17 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class DoctrineFluentMappingBundleTest extends TestCase
 {
-    public function test_build():void
-    {
-        $bundle = new DoctrineFluentMappingBundle();
-        $builderMock = $this->createMock(ContainerBuilder::class);
-        $builderMock->expects($this->once())
-            ->method('addCompilerPass')
-            ->with(new MappingDriverCompilerPass());
-
-        $bundle->build($builderMock);
-
-    }
+//    public function test_build():void
+//    {
+//        $bundle = new DoctrineFluentMappingBundle();
+//        $builderMock = $this->createMock(ContainerBuilder::class);
+//        $builderMock->expects($this->once())
+//            ->method('addCompilerPass')
+//            ->with(new MappingDriverCompilerPass());
+//
+//        $bundle->build($builderMock);
+//
+//    }
 
     public function test_extension_getter():void
     {
